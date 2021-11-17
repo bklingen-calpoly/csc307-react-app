@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  const name = req.query.name;
+  const name = req.query["name"];
   const job = req.query["job"];
   if (name === undefined && job === undefined) {
     res.send(users); //sending all
@@ -75,12 +75,6 @@ app.post("/users", (req, res) => {
   res.status(200).end();
 });
 
-app.delete("/users/:id", (req, res) => {
-  const id = req.params["id"];
-  if (deleteUserById(id)) res.status(204).end();
-  else res.status(404).send("Resource not found.");
-});
-
 app.patch("/users/:id", (req, res) => {
   const id = req.params["id"];
   const updatedUser = req.body;
@@ -90,6 +84,12 @@ app.patch("/users/:id", (req, res) => {
     users["users_list"].splice(index, 1, updatedUser); //Patching without validating incoming data
     res.status(204).end();
   } else res.status(404).send("Resource not found.");
+});
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  if (deleteUserById(id)) res.status(204).end();
+  else res.status(404).send("Resource not found.");
 });
 
 function findUserById(id) {
@@ -115,7 +115,7 @@ function addUser(user) {
   users["users_list"].push(user);
 }
 
-function delUserById(id) {
+function deleteUserById(id) {
   const userToDel = users["users_list"].find((user) => user["id"] === id);
   const index = userToDel ? users["users_list"].indexOf(userToDel) : undefined;
   if (index) {
