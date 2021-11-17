@@ -40,18 +40,23 @@ app.get("/", (req, res) => {
 
 app.get("/users", (req, res) => {
   const name = req.query.name;
-  if (name != undefined) {
+  const job = req.query["job"];
+  if (name === undefined && job === undefined) {
+    res.send(users); //sending all
+  } else if (name && !job) {
     let result = findUserByName(name);
     result = { users_list: result };
     res.send(result);
+  } else if (job && !name) {
+    let result = findUserByJob(job);
+    result = { users_list: result };
+    res.send(result);
   } else {
-    res.send(users);
+    let result = findUserByNameAndJob(name, job);
+    result = { users_list: result };
+    res.send(result);
   }
 });
-
-const findUserByName = (name) => {
-  return users["users_list"].filter((user) => user["name"] === name);
-};
 
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
@@ -64,19 +69,60 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
-function findUserById(id) {
-  return users["users_list"].find((user) => user["id"] === id); // or line below
-  //return users['users_list'].filter( (user) => user['id'] === id);
-}
-
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
   res.status(200).end();
 });
 
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  if (deleteUserById(id)) res.status(204).end();
+  else res.status(404).send("Resource not found.");
+});
+
+app.patch("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  const updatedUser = req.body;
+  const user = findUserById(id);
+  if (user) {
+    const index = users["users_list"].indexOf(user);
+    users["users_list"].splice(index, 1, updatedUser); //Patching without validating incoming data
+    res.status(204).end();
+  } else res.status(404).send("Resource not found.");
+});
+
+function findUserById(id) {
+  return users["users_list"].find((user) => user["id"] === id); // or line below
+  //return users['users_list'].filter( (user) => user['id'] === id);
+}
+
+const findUserByName = (name) => {
+  return users["users_list"].filter((user) => user["name"] === name);
+};
+
+const findUserByJob = (job) => {
+  return users["users_list"].filter((user) => user["job"] === job);
+};
+
+function findUserByNameAndJob(name, job) {
+  return users["users_list"].filter(
+    (user) => user["name"] === name && user["job"] === job
+  );
+}
+
 function addUser(user) {
   users["users_list"].push(user);
+}
+
+function delUserById(id) {
+  const userToDel = users["users_list"].find((user) => user["id"] === id);
+  const index = userToDel ? users["users_list"].indexOf(userToDel) : undefined;
+  if (index) {
+    users["users_list"].splice(index, 1);
+    return true;
+  }
+  return false;
 }
 
 app.listen(port, () => {
