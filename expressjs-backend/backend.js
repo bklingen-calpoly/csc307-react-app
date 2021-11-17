@@ -1,8 +1,12 @@
 const express = require("express");
 const app = express();
 const port = 5000;
-
+const uuid = require("uuid");
 const cors = require("cors");
+
+app.use(cors());
+
+app.use(express.json());
 
 const users = {
   users_list: [
@@ -33,10 +37,6 @@ const users = {
     },
   ],
 };
-
-app.use(cors());
-
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -75,8 +75,9 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  userToAdd["id"] = gen_random_id();
   addUser(userToAdd);
-  res.status(201).end();
+  res.status(201).send(userToAdd);
 });
 
 app.patch("/users/:id", (req, res) => {
@@ -101,13 +102,13 @@ function findUserById(id) {
   //return users['users_list'].filter( (user) => user['id'] === id);
 }
 
-const findUserByName = (name) => {
+function findUserByName(name) {
   return users["users_list"].filter((user) => user["name"] === name);
-};
+}
 
-const findUserByJob = (job) => {
+function findUserByJob(job) {
   return users["users_list"].filter((user) => user["job"] === job);
-};
+}
 
 function findUserByNameAndJob(name, job) {
   return users["users_list"].filter(
@@ -127,6 +128,11 @@ function deleteUserById(id) {
     return true;
   }
   return false;
+}
+
+function gen_random_id() {
+  const random_id = uuid.v4();
+  return random_id;
 }
 
 app.listen(port, () => {
