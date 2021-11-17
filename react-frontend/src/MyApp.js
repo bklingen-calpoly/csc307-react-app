@@ -14,7 +14,11 @@ function MyApp() {
   }
 
   function updateList(person) {
-    setCharacters([...characters, person]);
+    makePostCall(person).then((result) => {
+      if (result && result.status === 201)
+        setCharacters([...characters, person]);
+      console.log(result);
+    });
   }
 
   useEffect(() => {
@@ -44,12 +48,6 @@ function MyApp() {
     }
   }
 
-  function updateList(person) {
-    makePostCall(person).then((result) => {
-      if (result && result.status === 200)
-        setCharacters([...characters, person]);
-    });
-  }
   return (
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
