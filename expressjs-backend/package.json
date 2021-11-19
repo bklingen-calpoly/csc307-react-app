@@ -5,14 +5,15 @@
   "main": "backend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon backend.js",
-    "start": "node backend.js"
+    "dev": "nodemon backend_with_db.js",
+    "start": "node backend_with_db.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongoose": "^6.0.13",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
