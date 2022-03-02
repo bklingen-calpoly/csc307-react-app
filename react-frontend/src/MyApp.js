@@ -9,10 +9,12 @@ function MyApp() {
   function removeOneCharacter(index) {
     const person = characters[index].id;
     makeDeleteCall(person).then((result) => {
-      const updated = characters.filter((character, i) => {
-        return i !== index;
-      });
-      setCharacters(updated);
+      if (result.status === 204) {
+        const updated = characters.filter((character, i) => {
+          return i !== index;
+        });
+        setCharacters(updated);
+      }
     });
   }
 
