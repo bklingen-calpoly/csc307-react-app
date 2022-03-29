@@ -19,10 +19,6 @@ function MyApp() {
       name: "Dennis",
       job: "Bartender",
     },
-    {
-      name: "Alexa",
-      job: "Baker",
-    },
   ];
 
   return (
