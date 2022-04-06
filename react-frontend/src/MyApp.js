@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Table from "./Table";
 import Form from "./Form";
+// import RedditExample from "./RedditExample";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -20,6 +21,7 @@ function MyApp() {
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
       <Form handleSubmit={updateList} />
+      {/* <RedditExample subreddit="calpoly" /> */}
     </div>
   );
 }
