@@ -72,7 +72,8 @@ function MyApp() {
     //   <Form handleSubmit={updateList} />
     // </div>
     <div className="container">
-      <BrowserRouter>
+      // update basename for deploying to gh-pages
+      <BrowserRouter basename="/">
         <nav>
           <ul>
             <li>
