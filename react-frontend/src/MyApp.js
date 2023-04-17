@@ -34,7 +34,7 @@ function MyApp() {
 
   async function fetchAll() {
     try {
-      const response = await axios.get("http://localhost:5000/users");
+      const response = await axios.get("http://localhost:8000/users");
       return response.data.users_list;
     } catch (error) {
       //We're not handling errors. Just logging into the console.
@@ -45,7 +45,7 @@ function MyApp() {
 
   async function makePostCall(person) {
     try {
-      const response = await axios.post("http://localhost:5000/users", person);
+      const response = await axios.post("http://localhost:8000/users", person);
       return response;
     } catch (error) {
       console.log(error);
@@ -55,7 +55,7 @@ function MyApp() {
 
   async function makeDeleteCall(id) {
     try {
-      const response = await axios.delete("http://localhost:5000/users/" + id);
+      const response = await axios.delete("http://localhost:8000/users/" + id);
       return response;
     } catch (error) {
       console.log(error);
