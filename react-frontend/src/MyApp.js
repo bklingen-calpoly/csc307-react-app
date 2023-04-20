@@ -64,9 +64,38 @@ function MyApp() {
   }
 
   return (
+    // This is what we had before:
+    // <div className="container">
+    //   <Table characterData={characters} removeCharacter={removeOneCharacter} />
+    //   <Form handleSubmit={updateList} />
+    // </div>
+
     <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
-      <Form handleSubmit={updateList} />
+      <BrowserRouter>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/users-table">List all</Link>
+            </li>
+            <li>
+              <Link to="/form">Insert one</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/" element={<h1>Choose your path!</h1>} />
+          <Route
+            path="/users-table"
+            element={
+              <Table
+                characterData={characters}
+                removeCharacter={removeOneCharacter}
+              />
+            }
+          />
+          <Route path="/form" element={<Form handleSubmit={updateList} />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
