@@ -5,7 +5,7 @@ describe("The Add User Form", () => {
       job: "Professor",
     };
 
-    cy.visit("http://localhost:3000/");
+    cy.visit("/");
     cy.get('input[name="name"]').type(testdata.name);
     cy.get('input[name="job"]').type(testdata.job);
     cy.get('input[value="Submit"]').click();
