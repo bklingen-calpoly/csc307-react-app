@@ -78,8 +78,10 @@ function MyApp() {
     //   <Table characterData={characters} removeCharacter={removeOneCharacter} />
     //   <Form handleSubmit={updateList} />
     // </div>
+    //
+    // update basename below for deploying to gh-pages
     <div className="container">
-      // update basename for deploying to gh-pages
+      <h1>Choose your Path!</h1>
       <BrowserRouter basename="/">
         <nav>
           <ul>
@@ -92,7 +94,7 @@ function MyApp() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<h1>Choose your path!</h1>} />
+          <Route path="/" element={<h3>Welcome Home!</h3>} />
           <Route
             path="/users-table"
             element={
