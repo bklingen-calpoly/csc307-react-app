@@ -35,7 +35,9 @@ function MyApp() {
 
   async function fetchAll() {
     try {
-      const response = await axios.get("http://localhost:5000/users");
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/users`
+      );
       return response.data.users_list;
     } catch (error) {
       //We're not handling errors. Just logging into the console.
@@ -46,7 +48,10 @@ function MyApp() {
 
   async function makePostCall(person) {
     try {
-      const response = await axios.post("http://localhost:5000/users", person);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/users`,
+        person
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -56,7 +61,9 @@ function MyApp() {
 
   async function makeDeleteCall(id) {
     try {
-      const response = await axios.delete("http://localhost:5000/users/" + id);
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/users/${id}`
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -72,6 +79,7 @@ function MyApp() {
     // </div>
 
     <div className="container">
+      <h1>Choose Your Path!</h1>
       <BrowserRouter>
         <nav>
           <ul>
@@ -84,7 +92,7 @@ function MyApp() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<h1>Choose your path!</h1>} />
+          <Route path="/" element={<h3>Welcome Home!</h3>} />
           <Route
             path="/users-table"
             element={
