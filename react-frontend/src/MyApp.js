@@ -30,6 +30,7 @@ function MyApp() {
   useEffect(() => {
     fetchAll().then((result) => {
       if (result) setCharacters(result);
+      console.log(characters);
     });
   }, []);
 
@@ -77,10 +78,9 @@ function MyApp() {
     //   <Table characterData={characters} removeCharacter={removeOneCharacter} />
     //   <Form handleSubmit={updateList} />
     // </div>
-
     <div className="container">
-      <h1>Choose Your Path!</h1>
-      <BrowserRouter>
+      // update basename for deploying to gh-pages
+      <BrowserRouter basename="/">
         <nav>
           <ul>
             <li>
@@ -92,7 +92,7 @@ function MyApp() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<h3>Welcome Home!</h3>} />
+          <Route path="/" element={<h1>Choose your path!</h1>} />
           <Route
             path="/users-table"
             element={
